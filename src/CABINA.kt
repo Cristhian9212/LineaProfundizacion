@@ -19,7 +19,7 @@ puesto en el print.
 fun registrarLlamada(cabina: CabinaTelefonica, tipo: String, duracion: Int) {
     val costoPorMinuto = when (tipo.lowercase()) {
         "local" -> 50
-        "larga distancia" -> 350
+        "larga_distancia" -> 350
         "celular" -> 150
         else -> {
             println("Tipo de llamada no válido.")

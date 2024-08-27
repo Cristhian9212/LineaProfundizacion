@@ -8,9 +8,13 @@ fun main() {
 
     /* Le solicita al usuario la cantidad de cabinas telefónicas, y crea un identificador único
        para cada cabina. Estas se crean por medio de un arreglo. */
-    println("Ingrese el número de cabinas telefónicas:")
-    val numCabinas = scanner.nextInt()
-    val cabinas = Array(numCabinas) { CabinaTelefonica(it + 1) }
+    // println("Ingrese el número de cabinas telefónicas:")
+    // val numCabinas = scanner.nextInt()
+    var numCabinas = 1
+    println("-------------------------------------------------------------")
+    println("El número de cabinas disponibles es la siguiente: $numCabinas")
+    println("-------------------------------------------------------------")
+    var cabinas = Array(numCabinas) { CabinaTelefonica(it + 1) }
 
     /* Se crea una variable llamada continuar la cual, con el while, generará un bucle que permitirá al usuario
        seleccionar diferentes opciones hasta que solicite salir. */
@@ -22,7 +26,8 @@ fun main() {
         println("2. Mostrar información de una cabina")
         println("3. Mostrar consolidado total")
         println("4. Reiniciar una cabina")
-        println("5. Salir")
+        println("5. Agregar más cabinas") // Nueva opción para poder agregar más cabinas si es necesario
+        println("6. Salir")
         print("Seleccione una opción: ")
         val opcion = scanner.nextInt()
 
@@ -35,7 +40,7 @@ fun main() {
                 print("Ingrese el número de cabina: ")
                 val cabinaId = scanner.nextInt()
                 if (cabinaId in 1..numCabinas) {
-                    print("Ingrese el tipo de llamada (local, larga distancia, celular): ")
+                    print("Ingrese el tipo de llamada (local, larga_distancia, celular): ")
                     val tipoLlamada = scanner.next()
                     print("Ingrese la duración de la llamada en minutos: ")
                     val duracionLlamada = scanner.nextInt()
@@ -74,6 +79,7 @@ fun main() {
                 val costoPromedioPorMinuto = if (totalDuracion != 0) totalCosto / totalDuracion else 0
 
                 // Muestra el consolidado total de todas las cabinas
+                println("------------------------------")
                 println("Consolidado total:")
                 println("Número total de llamadas realizadas: $totalLlamadas")
                 println("Duración total de llamadas: $totalDuracion minutos")
@@ -92,8 +98,24 @@ fun main() {
                     println("Cabina no válida.")
                 }
             }
-            // Opción para salir del sistema
+            // Nueva opción para agregar más cabinas
             5 -> {
+                print("Ingrese la cantidad de cabinas adicionales: ")
+                val cabinasAdicionales = scanner.nextInt()
+                if (cabinasAdicionales > 0) {
+                    // Crea un nuevo arreglo con el tamaño incrementado
+                    val nuevasCabinas = Array(numCabinas + cabinasAdicionales) { index ->
+                        if (index < numCabinas) cabinas[index] else CabinaTelefonica(index + 1)
+                    }
+                    cabinas = nuevasCabinas
+                    numCabinas += cabinasAdicionales
+                    println("Ahora hay un total de $numCabinas cabinas.")
+                } else {
+                    println("Cantidad de cabinas adicionales no válida.")
+                }
+            }
+            // Opción para salir del sistema
+            6 -> {
                 continuar = false
                 println("Saliendo del sistema.")
             }
